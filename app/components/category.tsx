@@ -1,22 +1,34 @@
 "use client";
 
-import React from 'react';
-import { Accordion, AccordionItem } from '@nextui-org/react';
+import React from "react";
+import { Accordion, AccordionItem } from "@nextui-org/react";
 
 export default function Category() {
     let list = [1, 2, 3];
 
     const mapped = () => {
         return list.map((v, i) => (
-            <AccordionItem className='border-foreground border-spacing-4 mb-11 '  key={i} aria-label={v.toString()} title={v.toString()}>
+            <AccordionItem
+                className="border-foreground border-1 mb-8 "
+                key={i}
+                aria-label={v.toString()}
+                title={v.toString()}
+            >
                 This is accordion {v}
             </AccordionItem>
         ));
     };
 
     return (
-        <Accordion className=' w-6/12 ' variant='splitted'>
-            {mapped()}
+        <Accordion
+            variant="bordered"
+            className="w-[99%] m-0"
+        >
+            <AccordionItem title="Show List">
+                <Accordion className=" w-11/12 " variant="splitted">
+                    {mapped()}
+                </Accordion>
+            </AccordionItem>
         </Accordion>
     );
 }
