@@ -13,6 +13,7 @@ import {
     Button,
 } from "@nextui-org/react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import UserDropDown from "./UserDropdown";
 import "../icons.css";
 
 export default function App() {
@@ -39,10 +40,6 @@ export default function App() {
             isBordered={true}
         >
             <NavbarContent>
-                <NavbarMenuToggle
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"
-                />
                 <NavbarBrand className="absolute">
                     <Link
                         className="text-foreground  hover:cursor-pointer "
@@ -58,8 +55,8 @@ export default function App() {
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent>
-                <ThemeSwitcher />
+            <NavbarContent className="flex justify-end items-center">
+                <UserDropDown />
             </NavbarContent>
         </Navbar>
     );

@@ -25,7 +25,7 @@ export default function Category() {
             className="w-[99%] m-0"
         >
             <AccordionItem title="Show List">
-                <Accordion className=" w-11/12 " variant="splitted">
+                <Accordion className="" variant="splitted">
                     {mapped()}
                 </Accordion>
             </AccordionItem>
