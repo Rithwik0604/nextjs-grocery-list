@@ -1,10 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
+import { getData } from "../api/getData";
+// import handler from "../data/getData";
 
 export default function Category() {
     let list = [1, 2, 3];
+
+    // const [data, setData] = useState([]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const result = await handler();
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
+
+    // const data = getData();
 
     const mapped = () => {
         return list.map((v, i) => (
@@ -20,10 +37,7 @@ export default function Category() {
     };
 
     return (
-        <Accordion
-            variant="bordered"
-            className="w-[99%] m-0"
-        >
+        <Accordion variant="bordered" className="w-[99%] m-0">
             <AccordionItem title="Show List">
                 <Accordion className="" variant="splitted">
                     {mapped()}

@@ -34,6 +34,8 @@ const config: Config = {
                 light: {
                     colors: {
                         ctm: "#3636368A",
+                        background: "#faf0e6",
+                        // foreground: "",
                     },
                 },
             },

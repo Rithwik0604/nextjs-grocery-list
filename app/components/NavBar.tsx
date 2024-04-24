@@ -19,21 +19,9 @@ import "../icons.css";
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const menuItems = [
-        "Profile",
-        "Dashboard",
-        "Activity",
-        "Analytics",
-        "System",
-        "Deployments",
-        "My Settings",
-        "Team Settings",
-        "Help & Feedback",
-        "Log Out",
-    ];
-
     return (
         <Navbar
+            maxWidth={"full"}
             className="bg-ctm"
             onMenuOpenChange={setIsMenuOpen}
             position="sticky"
@@ -55,7 +43,7 @@ export default function App() {
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="flex justify-end items-center">
+            <NavbarContent className="flex flex-row-reverse" >
                 <UserDropDown />
             </NavbarContent>
         </Navbar>
