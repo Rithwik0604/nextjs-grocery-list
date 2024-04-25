@@ -1,4 +1,21 @@
 import { prisma } from "@/db";
+import { getServerSession } from "next-auth/next";
+
+
+export async function GetUser() {
+    const session = await getServerSession();
+    let user;
+
+    if (session) {
+        user = await prisma.user.findFirst({
+            where: {
+                email: session?.user?.email!,
+            },
+        });
+    }
+
+    return user;
+}
 
 export async function ChangeGot(id: number, got: boolean) {
     "use server";
@@ -39,16 +56,19 @@ export async function EditItem(item: ListItem) {
 
 }
 
-export async function AddItem(user: any, item: ListItem) {
+export async function AddItem(item: ListItem) {
 
     "use server";
+
+    const userID = await GetUser();
+
     await prisma.listItem.create({
         data: {
             name: item.name,
             category: item.category,
             replacement: item.replacement,
             quantity: item.quantity,
-            user : user
+            userId: userID?.id
         }
     })
 

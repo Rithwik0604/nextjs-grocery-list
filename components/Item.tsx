@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import {
     Table,
     TableHeader,
@@ -50,28 +50,45 @@ export default function Item({ items, funcs }: Props) {
         },
     ];
 
-    let rows: any = [];
+    const [rows, setRows] = useState([]);
 
     const getGot = (got: boolean, id: number) => {
         return (
             <Checkbox
                 // onChange={(e) => funcs.changeGot(id, e.target.checked)}
-                onChange={ () => funcs.changeGot(id, got)}
+                onChange={(e: any) => funcs.changeGot(id, e.target.checked)}
                 defaultSelected={got}
             />
         );
     };
 
+    let temp: any = [];
+    const remove = (i: ListItem) => {
+        // let items = itemsArray;
+        // items.splice(items.indexOf(i));
+        // funcs.removeItem(i.id!);
+        // setItemsArray(items);
+        temp = rows;
+        temp.splice(temp.indexOf(i));
+        items.splice(items.indexOf(i));
+        funcs.removeItem(i.id!);
+        setRows(temp);
+    };
+
+    useEffect(() => {
+        setRows(temp);
+    }, []);
+
     items.map((i: ListItem) => {
-        rows.push({
+        temp.push({
             key: i.id,
             item: i.name,
             quantity: i.quantity,
             replacement: i.replacement,
-            got: getGot(i.got, i.id),
-            edit: <Link href={"/edit" + i.id}> {Icons.edit} </Link>,
+            got: getGot(i.got!, i.id!),
+            edit: <Link href={"/edit/" + i.id}> {Icons.edit} </Link>,
             delete: (
-                <Button variant="light" isIconOnly>
+                <Button onClick={() => remove(i)} variant="light" isIconOnly>
                     {Icons.delete}
                 </Button>
             ),

@@ -29,6 +29,7 @@ const config: Config = {
                         background: "#1C1C1C",
                         foreground: "#ffffff",
                         ctm: "#3636368A",
+                        // red: "#610726",
                     },
                 },
                 light: {
@@ -36,6 +37,9 @@ const config: Config = {
                         ctm: "#3636368A",
                         background: "#faf0e6",
                         // foreground: "",
+                        // red: "#610726",
+
+
                     },
                 },
             },

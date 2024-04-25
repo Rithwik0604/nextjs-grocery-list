@@ -2,13 +2,13 @@ export {};
 
 declare global {
     type ListItem = {
-        id: number;
+        id?: number;
         name: string;
         quantity: string;
         replacement: string;
         category: string;
-        got : boolean;
-        userID: string;
+        got? : boolean;
+        userID?: string;
     };
 
     type Profile = {
