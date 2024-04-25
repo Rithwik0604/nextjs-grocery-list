@@ -17,4 +17,12 @@ export const Icons = {
             <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
         </svg>
     ),
+    login: <span className="material-symbols-outlined">login</span>,
+    logout: <span className="material-symbols-outlined">logout</span>,
+    grocery: <span className="material-symbols-outlined">grocery</span>,
+    person: <span className="material-symbols-outlined">person</span>,
+    dark_mode: <span className="material-symbols-outlined">dark_mode</span>,
+    light_mode: <span className="material-symbols-outlined">light_mode</span>,
+    edit: <span className="material-symbols-outlined">edit</span>,
+    delete: <span className="material-symbols-outlined">remove</span>,
 };

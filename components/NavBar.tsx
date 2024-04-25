@@ -14,7 +14,7 @@ import {
 } from "@nextui-org/react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import UserDropDown from "./UserDropdown";
-import "../icons.css";
+import { Icons } from "@/lib/Icons";
 
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -22,7 +22,7 @@ export default function App() {
     return (
         <Navbar
             maxWidth={"full"}
-            className="bg-ctm"
+            className="bg-ctm  select-none "
             onMenuOpenChange={setIsMenuOpen}
             position="sticky"
             isBordered={true}
@@ -36,14 +36,12 @@ export default function App() {
                     >
                         <p className="font-bold text-inherit">Grocery List</p>{" "}
                         &nbsp;
-                        <span className="material-symbols-outlined">
-                            grocery
-                        </span>
+                        {Icons.grocery}
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="flex flex-row-reverse" >
+            <NavbarContent className="flex flex-row-reverse">
                 <UserDropDown />
             </NavbarContent>
         </Navbar>

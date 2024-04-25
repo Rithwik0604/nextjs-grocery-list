@@ -9,11 +9,13 @@ datasource db {
 
 // Define the User model
 model User {
-    id     String @id @unique @default(uuid())
-    userId String @unique
-    email  String
-    name   String
-    lists  ListItem[] @relation("UserLists")
+    id         String     @id @unique @default(uuid())
+    email      String     @unique
+    firstName  String
+    secondName String
+    joinedAt   DateTime
+    lastLogin  DateTime
+    lists      ListItem[] @relation("UserLists")
 }
 
 // Define the ListItem model (renamed from List)
@@ -23,6 +25,7 @@ model ListItem {
     quantity    String
     replacement String? @default("-")
     category    String
+    got         Boolean @default(false)
     user        User    @relation("UserLists", fields: [userId], references: [id])
     userId      String
 }
