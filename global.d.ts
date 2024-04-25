@@ -33,5 +33,8 @@ declare global {
 
     type ItemFunctions = {
         changeGot: (id: number, got : boolean) => void;
+        removeItem : (id : number) => void;
+        editItem : (item : ListItem) => void;
+        addItem : (user, item : ListItem) => void;
     }
 }

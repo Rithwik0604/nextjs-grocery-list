@@ -5,41 +5,40 @@ import Category from "../components/category";
 import { prisma } from "@/db";
 // import { changeGot } from "./api/handleGot";
 import "./icons.css";
+import { ChangeGot, AddItem, EditItem, RemoveItem } from "@/lib/data";
+import AllButtons from "@/components/AllButtons";
 
-async function ChangeGot(id: number, got: boolean) {
-    "use server";
-    await prisma.listItem.update({
-        where: {
-            id: id,
-        },
-        data: {
-            got: got,
-        },
-    });
-}
+let user, userList: any;
+
+const funcs: ItemFunctions = {
+    changeGot: ChangeGot,
+    editItem: EditItem,
+    addItem: AddItem,
+    removeItem: RemoveItem,
+};
 
 export default async function Home() {
     const session = await getServerSession();
 
-    const user = await prisma.user.findFirst({
-        where: {
-            email: session?.user?.email!,
-        },
-    });
-    const list: any = await prisma.listItem.findMany({
-        where: {
-            user: user!,
-        },
-    });
+    if (session) {
+        user = await prisma.user.findFirst({
+            where: {
+                email: session?.user?.email!,
+            },
+        });
 
-    const funcs : ItemFunctions = {
-        changeGot : ChangeGot
+        userList = await prisma.listItem.findMany({
+            where: {
+                user: user!,
+            },
+        });
     }
 
     return (
         <main>
             <NavBar />
-            <Category list={list} passDown={funcs} />
+            <Category list={userList} passDown={funcs} />
+            {session && <AllButtons />}
         </main>
     );
 }

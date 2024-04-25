@@ -55,7 +55,8 @@ export default function Item({ items, funcs }: Props) {
     const getGot = (got: boolean, id: number) => {
         return (
             <Checkbox
-                onChange={(e) => funcs.changeGot(id, e.target.checked)}
+                // onChange={(e) => funcs.changeGot(id, e.target.checked)}
+                onChange={ () => funcs.changeGot(id, got)}
                 defaultSelected={got}
             />
         );
