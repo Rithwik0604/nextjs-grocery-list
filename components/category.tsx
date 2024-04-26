@@ -40,6 +40,10 @@ export default function Category(props: Props) {
         if (session) {
             setLoading(false);
             setSortedList(sortList(list));
+        } else {
+            setInterval(() => {
+                setLoading(false);
+            }, 500);
         }
     }, [session]);
 

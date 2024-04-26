@@ -21,7 +21,9 @@ export default function AllButtons() {
                 <Button as={Link} href="/uncheck">
                     Uncheck All
                 </Button>
-                <Button>Reset List</Button>
+                <Button as={Link} href="/reset">
+                    Reset List
+                </Button>
                 <Button href="/add" as={Link}>
                     Add Item
                 </Button>

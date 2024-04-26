@@ -101,3 +101,15 @@ export async function UncheckAll() {
     })
 
 }
+
+
+export async function ResetList() {
+    "use server";
+    const user = await GetUser();
+
+    await prisma.listItem.deleteMany({
+        where: {
+            userId: user?.id
+        }
+    })
+}

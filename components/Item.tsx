@@ -104,7 +104,7 @@ export default function Item({ items, funcs }: Props) {
     });
     return (
         rows.length > 0 && (
-            <Table className="" aria-label="Example table with dynamic content">
+            <Table className="custom" aria-label="Example table with dynamic content">
                 <TableHeader columns={columns}>
                     {(column: any) => (
                         <TableColumn className="text-start" key={column.key}>
