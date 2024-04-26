@@ -107,7 +107,7 @@ export default function Item({ items, funcs }: Props) {
             <Table className="" aria-label="Example table with dynamic content">
                 <TableHeader columns={columns}>
                     {(column: any) => (
-                        <TableColumn className="text-center" key={column.key}>
+                        <TableColumn className="text-start" key={column.key}>
                             {column.label}
                         </TableColumn>
                     )}
@@ -116,7 +116,7 @@ export default function Item({ items, funcs }: Props) {
                     {(item: any) => (
                         <TableRow key={item.key}>
                             {(columnKey) => (
-                                <TableCell className="text-center">
+                                <TableCell className="text-start">
                                     {getKeyValue(item, columnKey)}
                                 </TableCell>
                             )}

@@ -2,6 +2,8 @@ import { prisma } from "@/db";
 import { getServerSession } from "next-auth/next";
 
 
+
+
 export async function GetUser() {
     const session = await getServerSession();
     let user;
@@ -16,6 +18,8 @@ export async function GetUser() {
 
     return user;
 }
+
+
 
 export async function ChangeGot(id: number, got: boolean) {
     "use server";
@@ -69,6 +73,20 @@ export async function AddItem(item: ListItem) {
             replacement: item.replacement,
             quantity: item.quantity,
             userId: userID?.id
+        }
+    })
+
+}
+
+export async function UncheckAll() {
+    "use server";
+    const user = await GetUser();
+    await prisma.listItem.updateMany({
+        where: {
+            userId: user?.id!,
+        },
+        data: {
+            got: false,
         }
     })
 

@@ -18,7 +18,9 @@ export default function AllButtons() {
     return (
         !loading && (
             <footer className="w-full  flex flex-row  justify-evenly ">
-                <Button>Uncheck All</Button>
+                <Button as={Link} href="/uncheck">
+                    Uncheck All
+                </Button>
                 <Button>Reset List</Button>
                 <Button href="/add" as={Link}>
                     Add Item
