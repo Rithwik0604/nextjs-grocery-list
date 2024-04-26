@@ -16,7 +16,9 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import UserDropDown from "./UserDropdown";
 import { Icons } from "@/lib/Icons";
 
-export default function App() {
+export default function NavBar() {
+    console.info("RENDERING NAVBAR");
+
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (

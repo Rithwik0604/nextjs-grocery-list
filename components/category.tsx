@@ -1,15 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Spinner } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { PrismaClient } from "@prisma/client";
 import Item from "./Item";
 
 interface Props {
     list: ListItem[];
-    passDown : ItemFunctions,
-
+    passDown: ItemFunctions;
 }
 
 function sortList(list: ListItem[]) {
@@ -30,11 +29,19 @@ function sortList(list: ListItem[]) {
 }
 
 export default function Category(props: Props) {
-    // let list = [1, 2, 3];
+    console.info("RENDERING CATEGORY");
 
     const { data: session } = useSession();
+    const [loading, setLoading] = useState(true);
+    const [sortedList, setSortedList] = useState({});
 
     const list = props.list;
+    useEffect(() => {
+        if (session) {
+            setLoading(false);
+            setSortedList(sortList(list));
+        }
+    }, [session]);
 
     const mapped = () => {
         if (list.length === 0) {
@@ -54,23 +61,27 @@ export default function Category(props: Props) {
                             className="border-foreground-500 border-1 mb-8 p-0"
                             title={category}
                         >
-                            <Item items={sortedList[category]} funcs={props.passDown} />
+                            <Item
+                                items={sortedList[category]}
+                                funcs={props.passDown}
+                            />
                         </AccordionItem>
                     </Accordion>
                 );
             }
         }
-
         return accordionItems;
     };
 
-    // let title = list.length <=0 ?  "Show List" : "Show List - " + list.length;
+    if (loading) {
+        return <Spinner />;
+    }
 
     return (
         <>
             {session ? (
-                <Accordion variant="bordered" className="w-[99%] m-0">
-                    <AccordionItem title="Show List">
+                <Accordion variant="bordered" className="w-[99%] m-0 text-xs ">
+                    <AccordionItem className="text-xs" title="Show List">
                         {/* <Accordion className="" variant="splitted"> */}
                         {mapped()}
                         {/* </Accordion> */}

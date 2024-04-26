@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Table,
     TableHeader,
@@ -14,7 +14,9 @@ import {
 } from "@nextui-org/react";
 import { Icons } from "@/lib/Icons";
 import Link from "next/link";
-import { prisma } from "@/db";
+import "../app/globals.css";
+import "../app/icons.css";
+import { useRouter } from "next/navigation";
 
 interface Props {
     items: ListItem[];
@@ -22,6 +24,8 @@ interface Props {
 }
 
 export default function Item({ items, funcs }: Props) {
+    console.info("RENDERED ITEMS");
+
     const columns: any = [
         {
             key: "item",
@@ -50,12 +54,12 @@ export default function Item({ items, funcs }: Props) {
         },
     ];
 
+    const router = useRouter();
     const [rows, setRows] = useState([]);
 
     const getGot = (got: boolean, id: number) => {
         return (
             <Checkbox
-                // onChange={(e) => funcs.changeGot(id, e.target.checked)}
                 onChange={(e: any) => funcs.changeGot(id, e.target.checked)}
                 defaultSelected={got}
             />
@@ -64,14 +68,15 @@ export default function Item({ items, funcs }: Props) {
 
     let temp: any = [];
     const remove = (i: ListItem) => {
-        // let items = itemsArray;
-        // items.splice(items.indexOf(i));
-        // funcs.removeItem(i.id!);
-        // setItemsArray(items);
         temp = rows;
         temp.splice(temp.indexOf(i));
         items.splice(items.indexOf(i));
         funcs.removeItem(i.id!);
+
+        if (temp.length === 0) {
+            router.refresh();
+        }
+
         setRows(temp);
     };
 
@@ -86,35 +91,39 @@ export default function Item({ items, funcs }: Props) {
             quantity: i.quantity,
             replacement: i.replacement,
             got: getGot(i.got!, i.id!),
+            // TODO: complete the edit page
             edit: <Link href={"/edit/" + i.id}> {Icons.edit} </Link>,
             delete: (
                 <Button onClick={() => remove(i)} variant="light" isIconOnly>
-                    {Icons.delete}
+                    <span className="material-symbols-outlined text-red-500">
+                        remove
+                    </span>
                 </Button>
             ),
         });
     });
-
     return (
-        <Table className="m-0" aria-label="Example table with dynamic content">
-            <TableHeader columns={columns}>
-                {(column: any) => (
-                    <TableColumn className="text-center" key={column.key}>
-                        {column.label}
-                    </TableColumn>
-                )}
-            </TableHeader>
-            <TableBody items={rows}>
-                {(item: any) => (
-                    <TableRow key={item.key}>
-                        {(columnKey) => (
-                            <TableCell className="text-center">
-                                {getKeyValue(item, columnKey)}
-                            </TableCell>
-                        )}
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
+        rows.length > 0 && (
+            <Table className="" aria-label="Example table with dynamic content">
+                <TableHeader columns={columns}>
+                    {(column: any) => (
+                        <TableColumn className="text-center" key={column.key}>
+                            {column.label}
+                        </TableColumn>
+                    )}
+                </TableHeader>
+                <TableBody items={rows}>
+                    {(item: any) => (
+                        <TableRow key={item.key}>
+                            {(columnKey) => (
+                                <TableCell className="text-center">
+                                    {getKeyValue(item, columnKey)}
+                                </TableCell>
+                            )}
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        )
     );
 }

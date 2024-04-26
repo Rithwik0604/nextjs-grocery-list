@@ -27,9 +27,8 @@ export const Icons = {
     dark_mode: <span className="material-symbols-outlined">dark_mode</span>,
     light_mode: <span className="material-symbols-outlined">light_mode</span>,
     edit: <span className="material-symbols-outlined">edit</span>,
-    delete: (
-        <span className="material-symbols-outlined text-red-500">remove</span>
-    ),
+    delete: <span className="material-symbols-outlined text-red-500">remove</span>
+    ,
 
     item: <span className="material-symbols-outlined">nutrition</span>,
     quantity: <span className="material-symbols-outlined">numbers</span>,
