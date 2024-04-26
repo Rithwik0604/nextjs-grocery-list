@@ -42,6 +42,16 @@ export async function RemoveItem(id: number) {
     });
 }
 
+export async function GetEditData(id: number) {
+    "use server";
+
+    return await prisma.listItem.findFirst({
+        where: {
+            id: id
+        }
+    })
+}
+
 
 export async function EditItem(item: ListItem) {
 
