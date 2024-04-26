@@ -82,7 +82,7 @@ export async function AddItem(item: ListItem) {
             category: item.category,
             replacement: item.replacement,
             quantity: item.quantity,
-            userId: userID?.id
+            userId: userID?.id!
         }
     })
 

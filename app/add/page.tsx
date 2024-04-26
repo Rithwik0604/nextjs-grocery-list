@@ -14,7 +14,7 @@ import { GetUser, AddItem } from "@/lib/data";
 import { redirect } from "next/navigation";
 import MyAC from "./autoComplete";
 
-async function addItem(data: FormData, user: any) {
+async function addItem(data: FormData) {
     "use server";
 
     const item: string = data.get("item")?.valueOf().toString()!;
@@ -40,24 +40,24 @@ async function addItem(data: FormData, user: any) {
 export default async function Add() {
     let user = await GetUser();
 
-    const categories_: [] = await prisma.listItem.findMany({
-        where: {
-            user: user!,
-        },
-        select: {
-            category: true,
-        },
-    });
+    // const categories_: [] = await prisma.listItem.findMany({
+    //     where: {
+    //         user: user!,
+    //     },
+    //     select: {
+    //         category: true,
+    //     },
+    // });
 
-    let categories = [];
+    // let categories = [];
 
-    categories_.map((c) => {
-        categories.push(c.category);
-    });
+    // categories_.map((c) => {
+    //     categories.push(c.category);
+    // });
 
-    const auto = categories.map((c) => (
-        <AutocompleteItem key={c}>{c}</AutocompleteItem>
-    ));
+    // const auto = categories.map((c) => (
+    //     <AutocompleteItem key={c}>{c}</AutocompleteItem>
+    // ));
 
     return (
         <div className="p-8 flex flex-col items-center gap-20 ">
@@ -84,8 +84,16 @@ export default async function Add() {
                     placeholder="Replacement"
                     startContent={Icons.replacement}
                 />
-                <Autocomplete
-                    defaultItems={categories}
+
+                <Input
+                    type="text"
+                    name="category"
+                    placeholder="Category"
+                    startContent={Icons.category}
+                />
+
+                {/* <Autocomplete
+                    // defaultItems={categories}
                     allowsCustomValue
                     startContent={Icons.category}
                     name="category"
@@ -98,7 +106,7 @@ export default async function Add() {
                     >
                         {"animal.label"}
                     </AutocompleteItem> */}
-                </Autocomplete>
+                {/* </Autocomplete> */}
 
                 <div className=" w-full flex flex-row justify-between">
                     <Button href="/" as={Link}>
