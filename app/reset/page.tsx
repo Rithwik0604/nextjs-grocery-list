@@ -10,8 +10,17 @@ import {
 } from "@nextui-org/react";
 import { ResetList } from "@/lib/data";
 import Buttons from "./button";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function Uncheck() {
+export default async function Uncheck() {
+
+    const session = await getServerSession();
+
+    if (!session) {
+        redirect("/");
+    }
+
     return (
         <div className="w-full h-screen flex justify-center items-center">
             <Card className="max-w-[75%]">

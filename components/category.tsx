@@ -5,6 +5,7 @@ import { Accordion, AccordionItem, Spinner } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import { PrismaClient } from "@prisma/client";
 import Item from "./Item";
+import { capitalizeFirstLetter } from "@/lib/title";
 
 interface Props {
     list: ListItem[];
@@ -63,7 +64,7 @@ export default function Category(props: Props) {
                     <Accordion key={category} variant="splitted">
                         <AccordionItem
                             className="border-foreground-500 border-1 mb-8 p-0"
-                            title={category}
+                            title={capitalizeFirstLetter(category)}
                         >
                             <Item
                                 items={sortedList[category]}

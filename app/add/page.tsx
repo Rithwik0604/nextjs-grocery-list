@@ -11,8 +11,10 @@ import { prisma } from "@/db";
 import "@/app/icons.css";
 import { GetUser, AddItem } from "@/lib/data";
 import { redirect } from "next/navigation";
-import MyAC from "./autoComplete";
 import Link from "next/link";
+import AutoC from "@/components/AutoC";
+import { getServerSession } from "next-auth";
+import { capitalizeFirstLetter } from "@/lib/title";
 
 async function addItem(data: FormData) {
     "use server";
@@ -30,7 +32,7 @@ async function addItem(data: FormData) {
         name: item,
         quantity: quantity,
         replacement: replacement === "" ? "-" : replacement,
-        category: category,
+        category: category.trim().toLowerCase(),
     };
 
     await AddItem(listItem);
@@ -38,26 +40,27 @@ async function addItem(data: FormData) {
 }
 
 export default async function Add() {
+    const session = await getServerSession();
+
+    if (!session) {
+        redirect("/");
+    }
+
     let user = await GetUser();
+    const categories_: any[] = await prisma.listItem.findMany({
+        where: {
+            user: user!,
+        },
+        select: {
+            category: true,
+        },
+    });
+    // let categories: string[] = [];
+    const categoriesSet: Set<string> = new Set();
 
-    // const categories_: [] = await prisma.listItem.findMany({
-    //     where: {
-    //         user: user!,
-    //     },
-    //     select: {
-    //         category: true,
-    //     },
-    // });
-
-    // let categories = [];
-
-    // categories_.map((c) => {
-    //     categories.push(c.category);
-    // });
-
-    // const auto = categories.map((c) => (
-    //     <AutocompleteItem key={c}>{c}</AutocompleteItem>
-    // ));
+    categories_.map((c) => {
+        categoriesSet.add(capitalizeFirstLetter(c.category));
+    });
 
     return (
         <div className="p-8 flex flex-col items-center gap-20 ">
@@ -85,28 +88,7 @@ export default async function Add() {
                     startContent={Icons.replacement}
                 />
 
-                <Input
-                    type="text"
-                    name="category"
-                    placeholder="Category"
-                    startContent={Icons.category}
-                />
-
-                {/* <Autocomplete
-                    // defaultItems={categories}
-                    allowsCustomValue
-                    startContent={Icons.category}
-                    name="category"
-                    label="Category"
-                    isRequired
-                >
-                    {/* <AutocompleteItem
-                        key={"animal.value"}
-                        value={"animal.value"}
-                    >
-                        {"animal.label"}
-                    </AutocompleteItem> */}
-                {/* </Autocomplete> */}
+                <AutoC name="category" data={categoriesSet} label="Category" />
 
                 <div className=" w-full flex flex-row justify-between">
                     <Button href="/" as={Link}>

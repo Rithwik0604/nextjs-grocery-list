@@ -1,10 +1,14 @@
 import { Icons } from "@/lib/Icons";
-import { Autocomplete, Button, Input} from "@nextui-org/react";
+import { Autocomplete, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import React from "react";
-import { GetEditData, EditItem } from "@/lib/data";
+import { GetEditData, EditItem, GetUser } from "@/lib/data";
 import { redirect } from "next/navigation";
 import Header from "./header";
+import { getServerSession } from "next-auth";
+import { prisma } from "@/db";
+import { capitalizeFirstLetter } from "@/lib/title";
+import AutoC from "@/components/AutoC";
 
 type Params = {
     params: { id: string };
@@ -30,14 +34,40 @@ async function Handle(data: FormData) {
         name: item,
         quantity: quantity,
         replacement: replacement === "" ? "-" : replacement,
-        category: category,
+        category: category.trim().toLowerCase(),
     };
 
     await EditItem(listItem);
     redirect("/");
 }
 
+async function GetCategories() {
+    let user = await GetUser();
+    const categories_: any[] = await prisma.listItem.findMany({
+        where: {
+            user: user!,
+        },
+        select: {
+            category: true,
+        },
+    });
+    // let categories: string[] = [];
+    const categoriesSet: Set<string> = new Set();
+
+    categories_.map((c) => {
+        categoriesSet.add(capitalizeFirstLetter(c.category));
+    });
+
+    return categoriesSet;
+}
+
 export default async function Edit(params: Params) {
+    const session = await getServerSession();
+
+    if (!session) {
+        redirect("/");
+    }
+
     id = parseInt(params.params.id);
 
     if (isNaN(id)) {
@@ -49,6 +79,8 @@ export default async function Edit(params: Params) {
     if (data === null) {
         redirect("/");
     }
+
+    const categories = await GetCategories();
 
     return (
         <div className="p-8 flex flex-col mt-20 items-center gap-20 ">
@@ -78,14 +110,22 @@ export default async function Edit(params: Params) {
                     startContent={Icons.replacement}
                     defaultValue={data.replacement!}
                 />
-                <Input
+
+                <AutoC
+                    value={capitalizeFirstLetter(data.category)}
+                    name="category"
+                    data={categories}
+                    label="Category"
+                />
+
+                {/* <Input
                     isRequired
                     type="text"
                     name="category"
                     placeholder="Category"
                     startContent={Icons.category}
                     defaultValue={data.category!}
-                />
+                /> */}
 
                 <div className=" w-full flex flex-row justify-between">
                     <Button href="/" as={Link}>
