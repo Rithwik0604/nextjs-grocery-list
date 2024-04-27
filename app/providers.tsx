@@ -9,7 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <NextUIProvider>
             <NextThemesProvider attribute="class" defaultTheme="light">
-                <SessionProvider>{children}</SessionProvider>
+                <SessionProvider basePath="/newgrocerylist/api/auth" >{children}</SessionProvider>
             </NextThemesProvider>
         </NextUIProvider>
     );

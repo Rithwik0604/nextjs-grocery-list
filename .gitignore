@@ -21,6 +21,7 @@
 *.pem
 .env
 *.db
+*.zip
 
 # debug
 npm-debug.log*
@@ -29,6 +30,9 @@ yarn-error.log*
 
 # local env files
 .env*.local
+
+# rough files
+rough.js
 
 # vercel
 .vercel

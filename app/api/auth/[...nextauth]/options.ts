@@ -1,6 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from '@/db'
 import { NextAuthOptions } from "next-auth";
+import { signIn } from "next-auth/react";
 
 
 
@@ -45,5 +46,8 @@ export const options : any = {
             }
             return true
         },
+    },
+    pages : {
+        signIn: '/auth/signin',
     }
 }

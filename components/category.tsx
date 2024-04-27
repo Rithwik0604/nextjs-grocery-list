@@ -45,7 +45,7 @@ export default function Category(props: Props) {
                 setLoading(false);
             }, 500);
         }
-    }, [session]);
+    }, [session, list]);
 
     const mapped = () => {
         if (list.length === 0) {

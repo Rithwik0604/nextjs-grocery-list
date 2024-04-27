@@ -1,4 +1,5 @@
-export {};
+export { };
+
 
 declare global {
     type ListItem = {
@@ -7,7 +8,7 @@ declare global {
         quantity: string;
         replacement: string;
         category: string;
-        got? : boolean;
+        got?: boolean;
         userID?: string;
     };
 
@@ -28,13 +29,13 @@ declare global {
     };
 
     type SortedList = {
-        [category: string] : ListItem[];
+        [category: string]: ListItem[];
     };
 
     type ItemFunctions = {
-        changeGot: (id: number, got : boolean) => void;
-        removeItem : (id : number) => void;
-        editItem : (item : ListItem) => void;
-        addItem : (user, item : ListItem) => void;
+        changeGot: (id: number, got: boolean) => void;
+        removeItem: (id: number) => void;
+        editItem: (item: ListItem) => void;
+        addItem: (user, item: ListItem) => void;
     }
 }

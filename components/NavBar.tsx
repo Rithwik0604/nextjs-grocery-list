@@ -9,12 +9,13 @@ import {
     NavbarMenuToggle,
     NavbarMenu,
     NavbarMenuItem,
-    Link,
     Button,
+    Link,
 } from "@nextui-org/react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import UserDropDown from "./UserDropdown";
 import { Icons } from "@/lib/Icons";
+import NextLink from "next/link";
 
 export default function NavBar() {
     console.info("RENDERING NAVBAR");
@@ -32,6 +33,7 @@ export default function NavBar() {
             <NavbarContent>
                 <NavbarBrand className="absolute">
                     <Link
+                        as={NextLink}
                         className="text-foreground  hover:cursor-pointer "
                         size="lg"
                         href="/"

@@ -6,13 +6,13 @@ import {
     Autocomplete,
     AutocompleteItem,
     Button,
-    Link,
 } from "@nextui-org/react";
 import { prisma } from "@/db";
 import "@/app/icons.css";
 import { GetUser, AddItem } from "@/lib/data";
 import { redirect } from "next/navigation";
 import MyAC from "./autoComplete";
+import Link from "next/link";
 
 async function addItem(data: FormData) {
     "use server";

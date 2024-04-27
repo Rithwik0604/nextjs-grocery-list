@@ -1,5 +1,6 @@
 import { Icons } from "@/lib/Icons";
-import { Autocomplete, Button, Input, Link } from "@nextui-org/react";
+import { Autocomplete, Button, Input} from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import { GetEditData, EditItem } from "@/lib/data";
 import { redirect } from "next/navigation";
