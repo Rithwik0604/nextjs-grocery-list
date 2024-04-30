@@ -61,9 +61,14 @@ export default function Category(props: Props) {
             if (sortedList.hasOwnProperty(category)) {
                 // Push each accordion item JSX element into the array
                 accordionItems.push(
-                    <Accordion key={category} variant="splitted">
+                    <Accordion
+                        isCompact
+                        className="p-0 m-0 "
+                        key={category}
+                        variant="splitted"
+                    >
                         <AccordionItem
-                            className="border-foreground-500 border-1 mb-8 p-0"
+                            className="  border-foreground-500 overflow-hidden border-1 mb-8 p-0"
                             title={capitalizeFirstLetter(category)}
                         >
                             <Item
@@ -85,8 +90,16 @@ export default function Category(props: Props) {
     return (
         <>
             {session ? (
-                <Accordion variant="bordered" className="w-[99%] m-0 text-xs ">
-                    <AccordionItem className="text-xs" title="Show List">
+                <Accordion
+                    variant="bordered"
+                    className="w-[99%] m-0 text-xs "
+                    defaultExpandedKeys={["main"]}
+                >
+                    <AccordionItem
+                        key="main"
+                        className="text-xs"
+                        title="Show List"
+                    >
                         {/* <Accordion className="" variant="splitted"> */}
                         {mapped()}
                         {/* </Accordion> */}

@@ -19,6 +19,9 @@ const config: Config = {
             //     ctm: "#3636368A"
             // }
         },
+        fontSize: {
+            '2xs': '0.75rem',
+        }
     },
     // darkMode: 'class',
     plugins: [

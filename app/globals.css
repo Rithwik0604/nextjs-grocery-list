@@ -51,7 +51,7 @@ main {
 
 
 @media (max-width : 786px) {
-    html{
-        font-size: x-small;
-    }
+    /* html{
+        font-size: small;
+    } */
 }

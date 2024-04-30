@@ -38,7 +38,7 @@ export default function SignInPage() {
                             className="text-2xl"
                             onClick={() => {
                                 setLoading(true);
-                                signIn(g.id, { callbackUrl: "/" });
+                                signIn(g.id);
                             }}
                         >
                             Sign in with {g.name}
