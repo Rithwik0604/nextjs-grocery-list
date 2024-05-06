@@ -10,6 +10,8 @@ import { capitalizeFirstLetter } from "@/lib/title";
 interface Props {
     list: ListItem[];
     passDown: ItemFunctions;
+    title?: string;
+    open: boolean;
 }
 
 function sortList(list: ListItem[]) {
@@ -69,6 +71,7 @@ export default function Category(props: Props) {
                     >
                         <AccordionItem
                             className="  border-foreground-500 overflow-hidden border-1 mb-8 p-0"
+                            // title={capitalizeFirstLetter(category)}
                             title={capitalizeFirstLetter(category)}
                         >
                             <Item
@@ -93,12 +96,12 @@ export default function Category(props: Props) {
                 <Accordion
                     variant="bordered"
                     className="w-[99%] m-0 text-xs "
-                    defaultExpandedKeys={["main"]}
+                    defaultExpandedKeys={props.open ? ["main"] : []}
                 >
                     <AccordionItem
                         key="main"
                         className="text-xs"
-                        title="Show List"
+                        title={props.title ? props.title : "Show List"}
                     >
                         {/* <Accordion className="" variant="splitted"> */}
                         {mapped()}

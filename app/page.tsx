@@ -7,8 +7,7 @@ import { prisma } from "@/db";
 import "./icons.css";
 import { ChangeGot, AddItem, EditItem, RemoveItem } from "@/lib/data";
 import AllButtons from "@/components/AllButtons";
-
-let user, userList: any;
+import OtherLists from "@/components/OtherLists";
 
 const funcs: ItemFunctions = {
     changeGot: ChangeGot,
@@ -18,6 +17,11 @@ const funcs: ItemFunctions = {
 };
 
 export default async function Home() {
+    let user,
+        userList: any,
+        otherUsers: any,
+        otherList: any = [];
+
     const session = await getServerSession();
 
     if (session) {
@@ -32,13 +36,48 @@ export default async function Home() {
                 user: user!,
             },
         });
+
+        otherUsers = await prisma.userConnection.findMany({
+            where: {
+                user1Email: user?.email,
+            },
+            include: {
+                User2: {
+                    select: {
+                        id: true,
+                        firstName: true,
+                        secondName: true,
+                    },
+                },
+            },
+        });
+
+        const userIds = otherUsers.map((user: any) => ({
+            id: user.User2.id,
+            firstName: user.User2.firstName,
+            secondName: user.User2.secondName,
+        }));
+
+        await userIds.forEach(async (user: any) => {
+            let tempList = await prisma.listItem.findMany({
+                where: {
+                    userId: user.id,
+                },
+            });
+            otherList.push({ ...user, list: tempList });
+        });
+
+        console.log(otherList);
     }
 
     return (
         <main>
             <NavBar />
-            <Category list={userList} passDown={funcs} />
+            <Category list={userList} passDown={funcs} open={true} />
             {session && <AllButtons />}
+            {session && otherUsers.length > 0 && (
+                <OtherLists list={otherList} passDown={funcs} />
+            )}
         </main>
     );
 }
