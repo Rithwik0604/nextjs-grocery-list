@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function UserDropDown() {
+    // debugger;
     const { theme, setTheme } = useTheme();
 
     const switchTheme = () => {
@@ -50,6 +51,26 @@ export default function UserDropDown() {
                         onClick={() => signIn()}
                     ></DropdownItem>
                 )}
+
+                {session! && (
+                    <DropdownItem
+                        textValue="connection"
+                        startContent="Share List"
+                        endContent={Icons.connection}
+                        onClick={() => router.push("/share")}
+                    ></DropdownItem>
+                )}
+
+                {/* {session ? (
+                    <DropdownItem
+                        textValue="connection"
+                        startContent="Share List"
+                        endContent={Icons.connection}
+                        onClick={() => router.push("/share")}
+                    ></DropdownItem>
+                ) : (
+                    <span>Login to</span>
+                )} */}
 
                 {/* Theme */}
                 <DropdownItem

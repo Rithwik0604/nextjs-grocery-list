@@ -12,6 +12,12 @@ import {
     Button,
     Checkbox,
     Tooltip,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    Listbox,
+    ListboxSection,
+    ListboxItem,
 } from "@nextui-org/react";
 import { Icons } from "@/lib/Icons";
 import Link from "next/link";
@@ -19,6 +25,7 @@ import "../app/globals.css";
 import "../app/icons.css";
 import { useRouter } from "next/navigation";
 import { table } from "console";
+import { get } from "http";
 
 interface Props {
     items: ListItem[];
@@ -69,33 +76,38 @@ export default function Item({ items, funcs }: Props) {
         // },
     ];
 
-    let placement: OverlayPlacement = innerWidth > 768 ? "top" : "right";
+    let placement: OverlayPlacement = innerWidth > 768 ? "right" : "right";
 
     const router = useRouter();
     const [rows, setRows] = useState([]);
 
     const getGot = (got: boolean, id: number) => {
         return (
-            <Tooltip placement={placement} closeDelay={0} content="Got">
+            <Tooltip
+                className="flex items-center justify-center"
+                placement={"top"}
+                closeDelay={0}
+                content="Got"
+            >
                 <span className="text-lg cursor-pointer active:opacity-50 ">
-                    <input
+                    {/* <input
                         type="checkbox"
                         defaultChecked={got}
                         name="got"
                         id="got"
-                        className="p-40 accent-primary-500 w-4 h-4 rounded-full checked:bg-red-500 cursor-pointer"
+                        className="p-40 accent-primary-500 w-4 h-4 rounded-full cursor-pointer"
                         onChange={(e: any) =>
                             funcs.changeGot(id, e.target.checked)
                         }
-                    />
+                    /> */}
 
-                    {/* <Checkbox
+                    <Checkbox
                         className="flex container w-min h-min items-center justify-center"
                         onChange={(e: any) =>
                             funcs.changeGot(id, e.target.checked)
                         }
                         defaultSelected={got}
-                    ></Checkbox> */}
+                    ></Checkbox>
                 </span>
             </Tooltip>
         );
@@ -128,38 +140,84 @@ export default function Item({ items, funcs }: Props) {
             quantity: i.quantity,
             replacement: i.replacement,
             got: (
-                <div className="relative flex flex-wrap flex-col md:flex-row md:gap-1 justify-center items-center gap-2">
+                <div className="relative flex flex-nowrap flex-row md:gap-1 justify-center items-center gap-2">
                     {getGot(i.got!, i.id!)}
-                    <Tooltip
-                        placement={placement}
-                        closeDelay={0}
-                        content="Edit item"
-                        color="default"
-                    >
-                        <span className="text-lg cursor-pointer active:opacity-50">
-                            <Link href={"/edit/" + i.id}> {Icons.edit} </Link>{" "}
-                        </span>
-                    </Tooltip>
-
-                    <Tooltip
-                        placement={placement}
-                        closeDelay={0}
-                        content="Remove Item"
-                    >
-                        <span className="text-lg cursor-pointer active:opacity-50">
-                            <button
-                                className="m-0 p-0 h-min w-min "
-                                onClick={() => remove(i)}
-                                // variant="light"
-                                // isIconOnly
-                            >
-                                <span className="material-symbols-outlined p-0 m-0 text-red-500">
-                                    remove
-                                </span>
-                            </button>
-                        </span>
-                    </Tooltip>
+                    <Popover showArrow placement="bottom">
+                        <PopoverTrigger className="cursor-pointer" >{Icons.actions}</PopoverTrigger>
+                        <PopoverContent>
+                            <Listbox className="flex flex-row items-center justify-center">
+                                <ListboxItem key={"edit"}>
+                                    <Tooltip
+                                        placement={placement}
+                                        closeDelay={0}
+                                        content="Edit item"
+                                        color="default"
+                                    >
+                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                            <Link href={"/edit/" + i.id}>
+                                                {" "}
+                                                {Icons.edit}{" "}
+                                            </Link>{" "}
+                                        </span>
+                                    </Tooltip>
+                                </ListboxItem>
+                                <ListboxItem key={"remove"}>
+                                    <Tooltip
+                                        placement={placement}
+                                        closeDelay={0}
+                                        content="Remove Item"
+                                    >
+                                        <span className="text-lg cursor-pointer active:opacity-50">
+                                            <button
+                                                className="m-0 p-0 h-min w-min "
+                                                onClick={() => remove(i)}
+                                                // variant="light"
+                                                // isIconOnly
+                                            >
+                                                <span className="material-symbols-outlined p-0 m-0 text-red-500">
+                                                    remove
+                                                </span>
+                                            </button>
+                                        </span>
+                                    </Tooltip>
+                                </ListboxItem>
+                            </Listbox>
+                        </PopoverContent>
+                    </Popover>
                 </div>
+
+                // {/* // <div className="relative flex flex-wrap flex-col md:flex-row md:gap-1 justify-center items-center gap-2"> */}
+                // {/* //     {getGot(i.got!, i.id!)} */}
+                //     <Tooltip
+                //         placement={placement}
+                //         closeDelay={0}
+                //         content="Edit item"
+                //         color="default"
+                //     >
+                //         <span className="text-lg cursor-pointer active:opacity-50">
+                //             <Link href={"/edit/" + i.id}> {Icons.edit} </Link>{" "}
+                //         </span>
+                //     </Tooltip>
+
+                //     <Tooltip
+                //         placement={placement}
+                //         closeDelay={0}
+                //         content="Remove Item"
+                //     >
+                //         <span className="text-lg cursor-pointer active:opacity-50">
+                //             <button
+                //                 className="m-0 p-0 h-min w-min "
+                //                 onClick={() => remove(i)}
+                //                 // variant="light"
+                //                 // isIconOnly
+                //             >
+                //                 <span className="material-symbols-outlined p-0 m-0 text-red-500">
+                //                     remove
+                //                 </span>
+                //             </button>
+                //         </span>
+                //     </Tooltip>
+                // </?div>
             ),
             // TODO: complete the edit page
             edit: (

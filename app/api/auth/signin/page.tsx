@@ -38,7 +38,7 @@ export default function SignInPage() {
                             className="text-2xl"
                             onClick={() => {
                                 setLoading(true);
-                                signIn(g.id);
+                                signIn(g.id, { prompt: "login" });
                             }}
                         >
                             Sign in with {g.name}

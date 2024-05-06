@@ -5,18 +5,24 @@ import { signIn } from "next-auth/react";
 
 
 
-export const options : any = {
+export const options: any = {
     providers: [
         GoogleProvider({
 
             clientId: process.env.GOOGLE_ID!,
-            clientSecret: process.env.GOOGLE_SECRET!
+            clientSecret: process.env.GOOGLE_SECRET!,
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code"
+                }
+            }
         })
     ],
 
     callbacks: {
         async signIn({ profile }: { profile: Profile }) {
-
             const exist = await prisma.user.findFirst({
                 where: {
                     email: profile.email
@@ -47,7 +53,7 @@ export const options : any = {
             return true
         },
     },
-    pages : {
+    pages: {
         signIn: '/auth/signin',
     }
 }

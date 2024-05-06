@@ -38,4 +38,14 @@ declare global {
         editItem: (item: ListItem) => void;
         addItem: (user, item: ListItem) => void;
     }
+    type Connection = {
+        id: number,
+        user1Email: string,
+        user2Email: string,
+        canEdit: boolean,
+        User2: {
+            firstName: string,
+            secondName: string,
+        }
+    }
 }

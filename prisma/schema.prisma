@@ -9,13 +9,15 @@ datasource db {
 
 // Define the User model
 model User {
-    id         String     @id @unique @default(uuid())
-    email      String     @unique
-    firstName  String
-    secondName String
-    joinedAt   DateTime
-    lastLogin  DateTime
-    lists      ListItem[] @relation("UserLists")
+    id               String           @id @unique @default(uuid())
+    email            String           @unique
+    firstName        String
+    secondName       String
+    joinedAt         DateTime
+    lastLogin        DateTime
+    lists            ListItem[]       @relation("UserLists")
+    userConnections1 UserConnection[] @relation("User1Connections")
+    userConnections2 UserConnection[] @relation("User2Connections")
 }
 
 // Define the ListItem model (renamed from List)
@@ -28,4 +30,16 @@ model ListItem {
     got         Boolean @default(false)
     user        User    @relation("UserLists", fields: [userId], references: [id])
     userId      String
+}
+
+model UserConnection {
+    id Int @id @default(autoincrement())
+
+    User1      User?   @relation("User1Connections", fields: [user1Email], references: [email])
+    user1Email String?
+    User2      User?   @relation("User2Connections", fields: [user2Email], references: [email])
+    user2Email String?
+    canEdit    Boolean @default(false)
+
+    @@index([user1Email, user2Email])
 }

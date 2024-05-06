@@ -5,9 +5,9 @@
 .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
-
+/*
 @media (max-width : 786px) {
     .material-symbols-outlined {
         scale: 55%;
     }
-}
+} */

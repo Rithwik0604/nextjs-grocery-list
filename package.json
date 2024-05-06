@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@nextui-org/date-picker": "^2.0.7",
         "@nextui-org/react": "^2.2.10",
         "@prisma/client": "^5.12.1",
         "framer-motion": "^11.0.28",
