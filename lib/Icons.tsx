@@ -64,4 +64,6 @@ export const Icons = {
     email: <span className="material-symbols-outlined">mail</span>,
     actions: <span className="material-symbols-outlined">more_horiz</span>,
     close: <span className="material-symbols-outlined">close</span>,
+    show: <span className="material-symbols-outlined">expand_more</span>,
+    dont_show: <span className="material-symbols-outlined">expand_less</span>,
 };

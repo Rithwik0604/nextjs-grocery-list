@@ -12,6 +12,7 @@ interface Props {
     passDown: ItemFunctions;
     title?: string;
     open: boolean;
+    canEdit?: boolean;
 }
 
 function sortList(list: ListItem[]) {
@@ -49,7 +50,6 @@ export default function Category(props: Props) {
             }, 500);
         }
     }, [session, list]);
-
     const mapped = () => {
         if (list.length === 0) {
             return <p>No items</p>;
@@ -77,6 +77,7 @@ export default function Category(props: Props) {
                             <Item
                                 items={sortedList[category]}
                                 funcs={props.passDown}
+                                canEdit={props.canEdit}
                             />
                         </AccordionItem>
                     </Accordion>
@@ -100,7 +101,7 @@ export default function Category(props: Props) {
                 >
                     <AccordionItem
                         key="main"
-                        className="text-xs"
+                        className="text-xs max-h-catv overflow-y-auto "
                         title={props.title ? props.title : "Show List"}
                     >
                         {/* <Accordion className="" variant="splitted"> */}
