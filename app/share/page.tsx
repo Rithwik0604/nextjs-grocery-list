@@ -10,10 +10,8 @@ type Search = {
     };
 };
 
-export default async function Share() {
+export default async function Share({ searchParams }: Search) {
     let data: any = await getConnections();
-
-
 
     return (
         <div className="w-screen h-screen flex flex-col justify-center items-center p-4 gap-10 ">

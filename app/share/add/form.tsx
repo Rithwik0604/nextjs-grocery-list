@@ -20,7 +20,6 @@ export default function Form({ handle }: FormProps) {
         const r: any = await handle(data);
         if (r === 0) {
             router.push("/share");
-            router.refresh();
         }
         setStatus(r);
         setTimeout(() => {

@@ -32,19 +32,6 @@ body {
         var(--background-start-rgb);
 } */
 
-::-webkit-scrollbar {
-    @apply md:w-2;
-}
-::-webkit-scrollbar-thumb {
-    /* background-color: var(--foreground-rgb); */
-    border-radius: 1rem;
-    @apply md:bg-scrollbar md:rounded-scrollbar md:w-2;
-}
-
-::-webkit-scrollbar-thumb:active {
-    @apply bg-scrollbar-active;
-}
-
 main {
     width: 100vw;
     height: 100%;
