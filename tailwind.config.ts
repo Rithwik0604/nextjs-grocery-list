@@ -15,13 +15,17 @@ const config: Config = {
                 "gradient-conic":
                     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
             },
-            // colors: {
-            //     ctm: "#3636368A"
-            // }
+            maxHeight: {
+                'catv': '30vh'
+            },
+            borderRadius: {
+                'scrollbar': "1rem"
+            },
+            fontSize: {
+                '2xs': '0.75rem',
+                'title': "1.5rem"
+            }
         },
-        fontSize: {
-            '2xs': '0.75rem',
-        }
     },
     // darkMode: 'class',
     plugins: [
@@ -33,6 +37,8 @@ const config: Config = {
                         foreground: "#ffffff",
                         ctm: "#3636368A",
                         // red: "#610726",
+                        scrollbar: "#5C5C5C8A",
+                        "scrollbar-active": "#8787878A"
                     },
                 },
                 light: {
@@ -41,6 +47,9 @@ const config: Config = {
                         background: "#faf0e6",
                         // foreground: "",
                         // red: "#610726",
+                        scrollbar: "#BEBEBE",
+                        "scrollbar-active": "#8F8F8F"
+
 
 
                     },

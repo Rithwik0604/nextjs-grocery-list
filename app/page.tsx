@@ -39,10 +39,10 @@ export default async function Home() {
 
         otherUsers = await prisma.userConnection.findMany({
             where: {
-                user1Email: user?.email,
+                user2Email: user?.email,
             },
             include: {
-                User2: {
+                User1: {
                     select: {
                         id: true,
                         firstName: true,
@@ -52,10 +52,11 @@ export default async function Home() {
             },
         });
 
-        const userIds = otherUsers.map((user: any) => ({
-            id: user.User2.id,
-            firstName: user.User2.firstName,
-            secondName: user.User2.secondName,
+        const userIds = await otherUsers.map((user: any) => ({
+            id: user.User1.id,
+            firstName: user.User1.firstName,
+            secondName: user.User1.secondName,
+            canEdit : user.canEdit,
         }));
 
         await userIds.forEach(async (user: any) => {
@@ -73,7 +74,7 @@ export default async function Home() {
     return (
         <main>
             <NavBar />
-            <Category list={userList} passDown={funcs} open={true} />
+            <Category list={userList} passDown={funcs} open={true} canEdit={true}/>
             {session && <AllButtons />}
             {session && otherUsers.length > 0 && (
                 <OtherLists list={otherList} passDown={funcs} />

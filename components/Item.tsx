@@ -30,6 +30,7 @@ import { get } from "http";
 interface Props {
     items: ListItem[];
     funcs: ItemFunctions;
+    canEdit?: boolean;
 }
 type OverlayPlacement =
     | "top"
@@ -45,8 +46,9 @@ type OverlayPlacement =
     | "right-start"
     | "right-end";
 
-export default function Item({ items, funcs }: Props) {
+export default function Item({ items, funcs, canEdit }: Props) {
     console.info("RENDERED ITEMS");
+    console.log("🚀 ~ Item ~ canEdit:", canEdit)
 
     const columns: any = [
         {
@@ -107,6 +109,7 @@ export default function Item({ items, funcs }: Props) {
                             funcs.changeGot(id, e.target.checked)
                         }
                         defaultSelected={got}
+                        isReadOnly={!canEdit}
                     ></Checkbox>
                 </span>
             </Tooltip>
@@ -142,48 +145,52 @@ export default function Item({ items, funcs }: Props) {
             got: (
                 <div className="relative flex flex-nowrap flex-row md:gap-1 justify-center items-center gap-2">
                     {getGot(i.got!, i.id!)}
-                    <Popover showArrow placement="bottom">
-                        <PopoverTrigger className="cursor-pointer" >{Icons.actions}</PopoverTrigger>
-                        <PopoverContent>
-                            <Listbox className="flex flex-row items-center justify-center">
-                                <ListboxItem key={"edit"}>
-                                    <Tooltip
-                                        placement={placement}
-                                        closeDelay={0}
-                                        content="Edit item"
-                                        color="default"
-                                    >
-                                        <span className="text-lg cursor-pointer active:opacity-50">
-                                            <Link href={"/edit/" + i.id}>
-                                                {" "}
-                                                {Icons.edit}{" "}
-                                            </Link>{" "}
-                                        </span>
-                                    </Tooltip>
-                                </ListboxItem>
-                                <ListboxItem key={"remove"}>
-                                    <Tooltip
-                                        placement={placement}
-                                        closeDelay={0}
-                                        content="Remove Item"
-                                    >
-                                        <span className="text-lg cursor-pointer active:opacity-50">
-                                            <button
-                                                className="m-0 p-0 h-min w-min "
-                                                onClick={() => remove(i)}
-                                                // variant="light"
-                                                // isIconOnly
-                                            >
-                                                <span className="material-symbols-outlined p-0 m-0 text-red-500">
-                                                    remove
-                                                </span>
-                                            </button>
-                                        </span>
-                                    </Tooltip>
-                                </ListboxItem>
-                            </Listbox>
-                        </PopoverContent>
-                    </Popover>
+                    {canEdit && (
+                        <Popover showArrow placement="bottom">
+                            <PopoverTrigger className="cursor-pointer">
+                                {Icons.actions}
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                <Listbox className="flex flex-row items-center justify-center">
+                                    <ListboxItem key={"edit"}>
+                                        <Tooltip
+                                            placement={placement}
+                                            closeDelay={0}
+                                            content="Edit item"
+                                            color="default"
+                                        >
+                                            <span className="text-lg cursor-pointer active:opacity-50">
+                                                <Link href={"/edit/" + i.id}>
+                                                    {" "}
+                                                    {Icons.edit}{" "}
+                                                </Link>{" "}
+                                            </span>
+                                        </Tooltip>
+                                    </ListboxItem>
+                                    <ListboxItem key={"remove"}>
+                                        <Tooltip
+                                            placement={placement}
+                                            closeDelay={0}
+                                            content="Remove Item"
+                                        >
+                                            <span className="text-lg cursor-pointer active:opacity-50">
+                                                <button
+                                                    className="m-0 p-0 h-min w-min "
+                                                    onClick={() => remove(i)}
+                                                    // variant="light"
+                                                    // isIconOnly
+                                                >
+                                                    <span className="material-symbols-outlined p-0 m-0 text-red-500">
+                                                        remove
+                                                    </span>
+                                                </button>
+                                            </span>
+                                        </Tooltip>
+                                    </ListboxItem>
+                                </Listbox>
+                            </PopoverContent>
+                        </Popover>
+                    )}
                 </div>
 
                 // {/* // <div className="relative flex flex-wrap flex-col md:flex-row md:gap-1 justify-center items-center gap-2"> */}
